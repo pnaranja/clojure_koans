@@ -3,21 +3,39 @@
 
 (defn is-even? [n]
   (if (= n 0)
-    __
-    (___ (is-even? (dec n)))))
+    true
+    (if (= n 1)
+      false
+      (recur (is-even? (dec n)))
+      )
+    ))
 
 (defn is-even-bigint? [n]
+  "If you decrement once, it's odd. If you decrement twice, it's even.  Then repeat"
   (loop [n   n
          acc true]
     (if (= n 0)
-      __
+      acc
       (recur (dec n) (not acc)))))
 
 (defn recursive-reverse [coll]
-  __)
+  (loop [acc ()
+         coll coll]
+   (if (= 1 (count coll)) 
+     (cons (first coll) acc)
+     (recur (cons (first coll) acc) (drop 1 coll))     
+     )
+   ))
 
 (defn factorial [n]
-  __)
+  "0! and 1!=1
+   else it is n*(n-1)"
+ (loop [acc 1, n (if (> n 1000N) 1000N n)]
+    (if (or (= n 0) (= n 1)) acc
+      (recur (* n acc) (- n 1))
+      ) 
+  )
+ )
 
 (meditations
   "Recursion ends with a base case"
@@ -49,6 +67,6 @@
 
   "You can even deal with very large numbers"
   (< 1000000000000000000000000N (factorial 1000N))
-
+  
   "But what happens when the machine limits you?"
   (< 1000000000000000000000000N (factorial 100003N)))
